@@ -1,5 +1,6 @@
 #include "common.h"
 
+//The client functions
 int start(char * username, CLIENT *);
 int quit(char * username, CLIENT *);
 int add( char * username, int message_num, char * message, CLIENT *);
@@ -7,6 +8,7 @@ char * retrieve( char * username, int message_num, CLIENT *);
 int delete( char * username, int message_num, CLIENT *);
 char * listall(char * username, CLIENT *);
 
+//Cleint main takes args HOSTNAME COMMAND [MESSAGENUM, MESSAGE]
 int main(int argc, char**argv)
 {
 	CLIENT *cl;
@@ -30,27 +32,36 @@ int main(int argc, char**argv)
     
     //Call a function based on the input command
     if(strcmp(argv[3], "START") == 0){
+        //Call the start function
         int result = start(username, cl);
         printf("%d\n", result);
     }else if(strcmp(argv[3], "QUIT") == 0){
+        //Call the quit function
         int result = quit(username, cl);
         printf("%d\n", result);
     }else if(strcmp(argv[3], "ADD") == 0){
+        //Get the message number from argument string
         int msgNum;
         sscanf (argv[4],"%d",&msgNum);
+        //Call Add message
         int result = add(username, msgNum, argv[5], cl);
         printf("%d\n", result);
     }else if(strcmp(argv[3], "RETRIEVE") == 0){
+        //Get the message number from argument string
         int msgNum;
         sscanf (argv[4],"%d",&msgNum);
+        //all Retrieve message
         char * result = retrieve(username, msgNum,  cl);
         printf("%s\n", result);
     }else if(strcmp(argv[3], "DELETE") == 0){
+        //Get the message number from argument string
         int msgNum;
         sscanf (argv[4],"%d",&msgNum);
+        //Call Delete
         int result = delete(username, msgNum,  cl);
         printf("%d\n", result);
     }else if(strcmp(argv[3], "LIST") == 0){
+        //Call list all
         char * result = listall(username, cl);
         printf("%s\n", result);
     }else{
@@ -128,10 +139,12 @@ int delete( char * username, int message_num, CLIENT * cl)
 //Call list all messages
 char * listall(char * username, CLIENT * cl)
 {
+    //Build message params
     struct message_params t;
     t.username = username;
     t.message_num = -1;
     t.message = "NOTHING";
+    //Call list all
     char ** result = list_all_messages_1(&t, cl);
 	return result[0];
 }
