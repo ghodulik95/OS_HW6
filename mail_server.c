@@ -7,6 +7,7 @@ int init = -1;
 int getUserNum(char * usn);
 int addMessage(char * usn, int msgNum, char * message);
 char * retMessage(char * usn, int msgNum);
+int delMessage(char * usn, int msgNum);
 
 void initialize(){
     int i;
@@ -162,7 +163,34 @@ char **list_all_messages_1_svc(struct message_params *mp, struct svc_req *rqstp)
 }
 int *delete_message_1_svc(struct message_params *mp, struct svc_req *rqstp)
 {
-    printf("Woop5\n");
-	fflush(NULL);
-	exit(0);
+    char * usn = mp->username;
+    int msgNum = mp->message_num;
+    static int * result;
+    result = delMessage(usn, msgNum);
+    return(&result);
+}
+
+int delMessage(char * usn, int msgNum)
+{
+    if(init == -1){
+        printf("Not initialized\n");
+        return -1;
+    }
+    if(msgNum < 0 || msgNum >= 100){
+        printf("Invalid message number %d\n", msgNum);
+        return -2;
+    }
+    int userNum = getUserNum(usn);
+    printf("User Num is %d\n", userNum);
+    if(userNum == -1){
+        return -1;
+    }
+    char * origMessage = messages[userNum][msgNum];
+    if(strcmp(origMessage, "") == 0){
+        printf("No message at %d\n", msgNum);
+        return -3;
+    }
+    printf("Deleting %s\n", origMessage);
+    strcpy(origMessage, "");
+    return origMessage;
 }

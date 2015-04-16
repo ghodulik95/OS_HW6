@@ -7,6 +7,7 @@ int start(char * username, CLIENT *);
 int quit(char * username, CLIENT *);
 int add( char * username, int message_num, char * message, CLIENT *);
 char * retrieve( char * username, int message_num, CLIENT *);
+int delete( char * username, int message_num, CLIENT *);
 
 int main(int argc, char**argv)
 {
@@ -46,6 +47,11 @@ int main(int argc, char**argv)
         sscanf (argv[4],"%d",&msgNum);
         char * result = retrieve(username, msgNum,  cl);
         printf("%s\n", result);
+    }else if(strcmp(argv[3], "DELETE") == 0){
+        int msgNum;
+        sscanf (argv[4],"%d",&msgNum);
+        int result = delete(username, msgNum,  cl);
+        printf("%d\n", result);
     }
 	clnt_destroy(cl);
 	return 0;
@@ -102,4 +108,18 @@ char * retrieve( char * username, int message_num, CLIENT * cl)
     t.message = "NOTHING";
     char ** result = retrieve_message_1(&t, cl);
 	return result[0];
+}
+
+int delete( char * username, int message_num, CLIENT * cl)
+{
+    struct message_params t;
+    t.username = username;
+    t.message_num = message_num;
+    t.message = "NOTHING";
+    int* result = delete_message_1(&t, cl);
+	if(*result < 0)
+	{
+		return -1;
+	}
+	return 0;
 }
