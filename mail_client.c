@@ -39,7 +39,10 @@ int main(int argc, char**argv)
 
 int start(char * username, CLIENT *cl)
 {
-	struct message_params t = {username, -1, "NOTHING"};
+	struct message_params t;
+    t.username = username;
+    t.message_num = -1;
+    t.message = "NOTHING";
 	
 	int* result = start_1(&t, cl);
 	if(*result < 0)
