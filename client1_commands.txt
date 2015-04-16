@@ -1,0 +1,39 @@
+//CLIENT OUTPUT
+Starting client JIM
+Adding 3 messages to JIM's mailbox
+Listing those messages:
+0th message woot w00000t
+1st message yay
+2nd message woop
+
+Deleting message 1 and listing all messages
+0th message woot w00000t
+2nd message woop
+
+Retrieving message 2
+2nd message woop
+
+Adding message 1 again and listing
+0th message woot w00000t
+1st message AGAIN!
+2nd message woop
+
+Quiting user JIM
+
+//SERVER OUTPUT
+Initializing data to empty
+Looking for an empty space to put JIM
+Putting JIM at 0
+User JIM found at 0
+Put message 0th message woot w00000t at 0
+User JIM found at 0
+Put message 1st message yay at 1
+User JIM found at 0
+Put message 2nd message woop at 2
+User JIM found at 0
+Deleting 1st message yay
+User JIM found at 0
+2nd message woop
+User JIM found at 0
+Put message 1st message AGAIN! at 1
+Found user JIM at 0 -- removing

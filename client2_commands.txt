@@ -1,0 +1,71 @@
+//CLIENT OUTPUT
+Starting client TIM
+Starting client BOB
+Adding 3 messages to TIM's mailbox
+Adding 3 messages to BOB's mailbox
+Listing those messages:
+0th message of TIM woot w00000t
+1st message of TIM yay
+2nd message of TIM woop
+
+0th message of BOB woot w00000t
+1st message of BOB yay
+2nd message of BOB woop
+
+Deleting message 1 and listing all messages
+0th message of TIM woot w00000t
+2nd message of TIM woop
+
+0th message of BOB woot w00000t
+2nd message of BOB woop
+
+Retrieving message 2
+2nd message of TIM woop
+
+2nd message of BOB woop
+
+Adding message 1 again and listing
+0th message of TIM woot w00000t
+1st message of TIM AGAIN!
+2nd message of TIM woop
+
+0th message of BOB woot w00000t
+1st message of BOB AGAIN!
+2nd message of BOB woop
+
+Quiting user TIM and BOB
+
+
+//SERVER OUTPUT
+Initializing data to empty
+Looking for an empty space to put TIM
+Putting TIM at 0
+Looking for an empty space to put BOB
+Checking user number 0
+Putting BOB at 1
+User TIM found at 0
+Put message 0th message of TIM woot w00000t at 0
+User TIM found at 0
+Put message 1st message of TIM yay at 1
+User TIM found at 0
+Put message 2nd message of TIM woop at 2
+User BOB found at 1
+Put message 0th message of BOB woot w00000t at 0
+User BOB found at 1
+Put message 1st message of BOB yay at 1
+User BOB found at 1
+Put message 2nd message of BOB woop at 2
+User TIM found at 0
+Deleting 1st message of TIM yay
+User BOB found at 1
+Deleting 1st message of BOB yay
+User TIM found at 0
+2nd message of TIM woop
+User BOB found at 1
+2nd message of BOB woop
+User TIM found at 0
+Put message 1st message of TIM AGAIN! at 1
+User BOB found at 1
+Put message 1st message of BOB AGAIN! at 1
+Found user TIM at 0 -- removing
+Found user BOB at 1 -- removing

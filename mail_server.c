@@ -223,7 +223,7 @@ int addMessage(char * usn, int msgNum, char * message)
     if(userNum == -1){
         return -1;
     }
-    printf("User %s found at $d\n", usn, userNum);
+    printf("User %s found at %d\n", usn, userNum);
     //Get the pointer to the message location
     char * origMessage = messages[userNum][msgNum];
     //Check if there is already a message
