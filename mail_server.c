@@ -8,6 +8,7 @@ struct user_list{
 
 struct user_list *users = NULL;
 int addUser(char * usn);
+int removeUser(char * usn);
 
 int *start_1_svc(struct message_params *mp, struct svc_req *rqstp)
 {
@@ -20,10 +21,11 @@ int *start_1_svc(struct message_params *mp, struct svc_req *rqstp)
 
 int addUser(char * usn){
     if(users == NULL){
-        users = malloc(sizeof users);
-        users->usn = NULL;
-        users->messages = NULL;
-        users->next = NULL;
+        struct user_list currentUser;
+        currentUser.usn = NULL;
+        currentUser.messages = NULL;
+        currentUser.next = NULL;
+        users = &currentUser;
     }
     printf("Looking for user %s\n", usn);
     struct user_list *cur = users;
@@ -31,15 +33,16 @@ int addUser(char * usn){
     while(cur->next != NULL){
         cur = cur->next;
         printf("%s?\n", cur->usn);
-        if(strcmp(cur->usn, usn) == 0){
+        if(strncmp(cur->usn, usn, 20) == 0){
             printf("Found user\n");
             return -2;
         }
     }
-    struct user_list currentUser = {usn, NULL, NULL};
-    //currentUser->usn = usn;
-   // currentUser->messages = NULL;
-    //currentUser->next = NULL;
+    struct user_list currentUser;// = {usn, NULL, NULL};
+    currentUser.usn = malloc(sizeof(char)*20);
+    strncpy(currentUser.usn, usn, 20);
+    currentUser.messages = NULL;
+    currentUser.next = NULL;
     cur->next = &currentUser;
     printf("Made new user named %s\n", usn);
     return 0;
@@ -47,9 +50,35 @@ int addUser(char * usn){
 
 int *quit_1_svc(struct message_params *mp, struct svc_req *rqstp)
 {
-	printf("Woop1\n");
-	fflush(NULL);
-	exit(0);
+	char * usn = mp->username;
+	printf("%s\n", usn);
+	static int response;
+	response = removeUser(usn);
+	return(&response);	
+}
+
+int removeUser(char * usn){
+    if(users == NULL){
+        return -1;
+    }
+    printf("Looking for user %s\n", usn);
+    struct user_list *cur = users;
+    
+    while(cur->next != NULL && cur->next->usn != NULL){
+        
+        struct user_list *next = cur->next;
+        
+        printf("Look.. %s\n", next);
+        printf("%s?\n", next->usn);
+        if(strncmp(next->usn, usn, 20) == 0){
+            printf("Found user\n");
+            cur->next = next->next;
+            return -2;
+        }
+        printf("Not this guy\n");
+        cur = cur->next;
+    }
+    return -1;
 }
 
 int *insert_message_1_svc(struct message_params *mp, struct svc_req *rqstp)

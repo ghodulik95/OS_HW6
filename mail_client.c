@@ -4,6 +4,7 @@
 #include "common.h"
 
 int start(char * username, CLIENT *);
+int quit(char * username, CLIENT *);
 
 int main(int argc, char**argv)
 {
@@ -30,10 +31,26 @@ int main(int argc, char**argv)
     if(strcmp(argv[3], "START") == 0){
         int result = start(username, cl);
         printf("%d\n", result);
-    }else{
-        printf("NOOOOOOOP\n");
+    }else if(strcmp(argv[3], "QUIT") == 0){
+        int result = quit(username, cl);
+        printf("%d\n", result);
     }
 	clnt_destroy(cl);
+	return 0;
+}
+
+int quit(char * username, CLIENT *cl)
+{
+	struct message_params t;
+    t.username = username;
+    t.message_num = -1;
+    t.message = "NOTHING";
+	
+	int* result = quit_1(&t, cl);
+	if(*result < 0)
+	{
+		return -1;
+	}
 	return 0;
 }
 
