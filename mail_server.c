@@ -6,7 +6,7 @@ int init = -1;
 
 int getUserNum(char * usn);
 int addMessage(char * usn, int msgNum, char * message);
-char * retMessage(char * usn, int msgNum, char * message);
+char * retMessage(char * usn, int msgNum);
 
 void initialize(){
     int i;
@@ -129,13 +129,12 @@ char **retrieve_message_1_svc(struct message_params *mp, struct svc_req *rqstp)
 {
     char * usn = mp->username;
     int msgNum = mp->message_num;
-    char * msg = mp->message;
     static char * result;
-    result = retMessage(usn, msgNum, msg);
+    result = retMessage(usn, msgNum);
     return(&result);
 }
 
-char * retMessage(char * usn, int msgNum, char * message)
+char * retMessage(char * usn, int msgNum)
 {
     if(init == -1){
         printf("Not initialized\n");
@@ -145,7 +144,6 @@ char * retMessage(char * usn, int msgNum, char * message)
         printf("Invalid message number %d\n", msgNum);
         return -2;
     }
-    printf("Retrieving message message %s\n", message);
     int userNum = getUserNum(usn);
     printf("User Num is %d\n", userNum);
     if(userNum == -1){

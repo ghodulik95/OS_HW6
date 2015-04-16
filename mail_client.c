@@ -6,7 +6,7 @@
 int start(char * username, CLIENT *);
 int quit(char * username, CLIENT *);
 int add( char * username, int message_num, char * message, CLIENT *);
-char * retrieve( char * username, int message_num, char * message, CLIENT *);
+char * retrieve( char * username, int message_num, CLIENT *);
 
 int main(int argc, char**argv)
 {
@@ -44,7 +44,7 @@ int main(int argc, char**argv)
     }else if(strcmp(argv[3], "RETRIEVE") == 0){
         int msgNum;
         sscanf (argv[4],"%d",&msgNum);
-        char * result = retrieve(username, msgNum, argv[5], cl);
+        char * result = retrieve(username, msgNum,  cl);
         printf("%s\n", result);
     }
 	clnt_destroy(cl);
@@ -94,12 +94,12 @@ int add( char * username, int message_num, char * message, CLIENT * cl){
 	return 0;
 }
 
-char * retrieve( char * username, int message_num, char * message, CLIENT * cl)
+char * retrieve( char * username, int message_num, CLIENT * cl)
 {
     struct message_params t;
     t.username = username;
     t.message_num = message_num;
-    t.message = message;
+    t.message = "NOTHING";
     char ** result = retrieve_message_1(&t, cl);
 	return result[0];
 }
