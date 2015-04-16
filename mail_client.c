@@ -1,6 +1,3 @@
-#include <time.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "common.h"
 
 int start(char * username, CLIENT *);
@@ -12,7 +9,6 @@ char * listall(char * username, CLIENT *);
 
 int main(int argc, char**argv)
 {
-	srand(time(NULL));
 	CLIENT *cl;
 	
 	// validate input
@@ -32,6 +28,7 @@ int main(int argc, char**argv)
 	}
     char *username = argv[2];
     
+    //Call a function based on the input command
     if(strcmp(argv[3], "START") == 0){
         int result = start(username, cl);
         printf("%d\n", result);
@@ -65,51 +62,49 @@ int main(int argc, char**argv)
 	return 0;
 }
 
+//Call Quit 
 int quit(char * username, CLIENT *cl)
 {
+    //Build the message params - message_num and message are dummy values
 	struct message_params t;
     t.username = username;
     t.message_num = -1;
     t.message = "NOTHING";
 	
 	int* result = quit_1(&t, cl);
-	if(*result < 0)
-	{
-		return -1;
-	}
-	return 0;
+    return *result;
+	
 }
 
+//Call start
 int start(char * username, CLIENT *cl)
 {
+    //Build the message params - message_num and message are dummy values
 	struct message_params t;
     t.username = username;
     t.message_num = -1;
     t.message = "NOTHING";
 	
 	int* result = start_1(&t, cl);
-	if(*result < 0)
-	{
-		return -1;
-	}
-	return 0;
+    return * result;
+	
 }
 
+//Call insert_message (add message - hence add)
 int add( char * username, int message_num, char * message, CLIENT * cl){
+    //Build the message params
     struct message_params t;
     t.username = username;
     t.message_num = message_num;
     t.message = message;
     int* result = insert_message_1(&t, cl);
-	if(*result < 0)
-	{
-		return -1;
-	}
-	return 0;
+	return *result;
 }
 
+//Call retrieve message
 char * retrieve( char * username, int message_num, CLIENT * cl)
 {
+    //Build the message params - message is dummy value
     struct message_params t;
     t.username = username;
     t.message_num = message_num;
@@ -118,20 +113,19 @@ char * retrieve( char * username, int message_num, CLIENT * cl)
 	return result[0];
 }
 
+//Call delete message
 int delete( char * username, int message_num, CLIENT * cl)
 {
+    //Build the message params - message is dummy value
     struct message_params t;
     t.username = username;
     t.message_num = message_num;
     t.message = "NOTHING";
     int* result = delete_message_1(&t, cl);
-	if(*result < 0)
-	{
-		return -1;
-	}
-	return 0;
+	return *result;
 }
 
+//Call list all messages
 char * listall(char * username, CLIENT * cl)
 {
     struct message_params t;
