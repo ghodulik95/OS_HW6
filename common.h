@@ -1,35 +1,19 @@
-
-
 #include "mailbox.h"
 #include <stdio.h>
 #include <sys/unistd.h>
-#include <time.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
 
-int rand0to2()
-{
-    short randval = 3;
+#define MAX_NUM_USERS 50
+#define MAX_NUM_MESSAGES 100
+#define MAX_MESSAGE_LEN 80
+#define MAX_USERNAME_LEN 20
 
-    while (randval > 2)
-        randval = (rand() & 0x0300) >> 8;
-    return (int)randval;
-}
+#define PRINT_MESSAGES 1
 
-void printinfo()
-{
-	char hostname[128];
-
-	gethostname(hostname, sizeof hostname);
-
-	char            fmt[64], buf[64];
-    struct timeval  tv;
-    struct tm       *tm;
-
-    gettimeofday(&tv, NULL);
-    if((tm = localtime(&tv.tv_sec)) != NULL)
-    {
-            strftime(fmt, sizeof fmt, "%H:%M:%S.%%03u", tm);
-            snprintf(buf, sizeof buf, fmt, tv.tv_usec);
+void printMessage(char * message){
+    if(PRINT_MESSAGES == 1){
+        printf("%s\n", message);
     }
-
-	printf("%s-%s-%d: ", buf, hostname, getpid());
 }

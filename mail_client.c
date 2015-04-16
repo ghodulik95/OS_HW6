@@ -34,32 +34,36 @@ int main(int argc, char**argv)
     if(strcmp(argv[3], "START") == 0){
         //Call the start function
         int result = start(username, cl);
-        printf("%d\n", result);
+        if(result < 0)
+            printf("Error: %d\n", result);
     }else if(strcmp(argv[3], "QUIT") == 0){
         //Call the quit function
         int result = quit(username, cl);
-        printf("%d\n", result);
+        if(result < 0)
+            printf("Error: %d\n", result);
     }else if(strcmp(argv[3], "ADD") == 0){
         //Get the message number from argument string
         int msgNum;
         sscanf (argv[4],"%d",&msgNum);
         //Call Add message
         int result = add(username, msgNum, argv[5], cl);
-        printf("%d\n", result);
+        if(result < 0)
+            printf("Error: %d\n", result);
     }else if(strcmp(argv[3], "RETRIEVE") == 0){
         //Get the message number from argument string
         int msgNum;
         sscanf (argv[4],"%d",&msgNum);
         //all Retrieve message
         char * result = retrieve(username, msgNum,  cl);
-        printf("%s\n", result);
+        printf("%s\n\n", result);
     }else if(strcmp(argv[3], "DELETE") == 0){
         //Get the message number from argument string
         int msgNum;
         sscanf (argv[4],"%d",&msgNum);
         //Call Delete
         int result = delete(username, msgNum,  cl);
-        printf("%d\n", result);
+        if(result < 0)
+            printf("Error: %d\n", result);
     }else if(strcmp(argv[3], "LIST") == 0){
         //Call list all
         char * result = listall(username, cl);

@@ -1,8 +1,11 @@
+#define MAX_MESSAGE_LEN 80
+#define MAX_USERNAME_LEN 20
+
 struct message_params
 {
-	string username<20>;
+	string username<MAX_USERNAME_LEN>;
     int message_num;
-    string message<80>;
+    string message<MAX_MESSAGE_LEN>;
 };
 
 program MAILBOXPROG
