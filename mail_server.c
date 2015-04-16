@@ -1,46 +1,47 @@
 #include "common.h"
 
 struct user_list{
-    char * username;
+    char * usn;
     char ** messages;
     struct user_list *next;
 };
 
 struct user_list *users = NULL;
-int addUser(char * username);
+int addUser(char * usn);
 
 int *start_1_svc(struct message_params *mp, struct svc_req *rqstp)
 {
-	printf("%s\n", mp->username);
+    char * usn = mp->username;
+	printf("%s\n", usn);
 	static int response;
-	response = addUser(mp->username);
+	response = addUser(usn);
 	return(&response);	
 }
 
-int addUser(char * username){
+int addUser(char * usn){
     if(users == NULL){
-        users = malloc(sizeof *users);
-        users->username = NULL;
+        users = malloc(sizeof users);
+        users->usn = NULL;
         users->messages = NULL;
         users->next = NULL;
     }
-    printf("Looking for user %s\n", username);
+    printf("Looking for user %s\n", usn);
     struct user_list *cur = users;
     
     while(cur->next != NULL){
         cur = cur->next;
-        printf("%s?\n", cur->username);
-        if(strcmp(cur->username, username) == 0){
+        printf("%s?\n", cur->usn);
+        if(strcmp(cur->usn, usn) == 0){
             printf("Found user\n");
             return -2;
         }
     }
-    struct user_list *currentUser = malloc(sizeof users);
-    currentUser->username = username;
-    currentUser->messages = NULL;
-    currentUser->next = NULL;
-    cur->next = currentUser;
-    printf("Made new user\n");
+    struct user_list currentUser = {usn, NULL, NULL};
+    //currentUser->usn = usn;
+   // currentUser->messages = NULL;
+    //currentUser->next = NULL;
+    cur->next = &currentUser;
+    printf("Made new user named %s\n", usn);
     return 0;
 }
 
