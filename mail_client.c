@@ -8,6 +8,7 @@ int quit(char * username, CLIENT *);
 int add( char * username, int message_num, char * message, CLIENT *);
 char * retrieve( char * username, int message_num, CLIENT *);
 int delete( char * username, int message_num, CLIENT *);
+char * listall(char * username, CLIENT *);
 
 int main(int argc, char**argv)
 {
@@ -52,6 +53,13 @@ int main(int argc, char**argv)
         sscanf (argv[4],"%d",&msgNum);
         int result = delete(username, msgNum,  cl);
         printf("%d\n", result);
+    }else if(strcmp(argv[3], "LIST") == 0){
+        char * result = listall(username, cl);
+        printf("%s\n", result);
+    }else{
+        printf("Unrecognized command %s\n", argv[3]);
+        clnt_destroy(cl);
+        return -1;
     }
 	clnt_destroy(cl);
 	return 0;
@@ -122,4 +130,14 @@ int delete( char * username, int message_num, CLIENT * cl)
 		return -1;
 	}
 	return 0;
+}
+
+char * listall(char * username, CLIENT * cl)
+{
+    struct message_params t;
+    t.username = username;
+    t.message_num = -1;
+    t.message = "NOTHING";
+    char ** result = list_all_messages_1(&t, cl);
+	return result[0];
 }

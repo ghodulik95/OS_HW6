@@ -157,9 +157,27 @@ char * retMessage(char * usn, int msgNum)
 
 char **list_all_messages_1_svc(struct message_params *mp, struct svc_req *rqstp)
 {
-    printf("Woop4\n");
-	fflush(NULL);
-	exit(0);
+    char * all_messages = malloc(sizeof(char)*(100*80 + 100));
+    char * usn = mp->username;
+    int userNum = getUserNum(usn);
+    char * temp;
+    int currentMsgNum;
+    int end = 0;
+    for(currentMsgNum = 0; currentMsgNum < 100; currentMsgNum++){
+        char * msg = messages[userNum][currentMsgNum];
+        if(strcmp(msg, "") != 0){
+            temp = all_messages + end;
+            strcpy(temp, msg);
+            end = end + strlen(msg);
+            temp = all_messages + end;
+            *temp = '\n';
+            end += 1;
+        }
+    }
+    temp = all_messages + end;
+    *temp = '\0';
+    
+    return &all_messages;
 }
 int *delete_message_1_svc(struct message_params *mp, struct svc_req *rqstp)
 {
